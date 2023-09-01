@@ -83,24 +83,21 @@ cols = []
 
 # loop through each column in the dataframe
 for col in df.columns:
-# check if the column is categorical
+    # check if the column is categorical
     if col in ['discharge_disposition_id', 'admission_source_id', 'diabetesMed', 'weight', 'payer_code',
                'age', 'admission_type_id', 'medical_specialty', 'diag_1', 'race']:
         # create a StringIndexer object and fit it to the column
         indexer = StringIndexer(inputCol=col, outputCol=col+"_index")
         indexers.append(indexer)
-    
-        if col in ['discharge_disposition_id', 'admission_source_id', 'weight', 'payer_code',
-                'age', 'admission_type_id', 'medical_specialty', 'diag_1', 'race']:
+        if col in ['discharge_disposition_id', 'admission_source_id', 'weight', 'payer_code','age', 'admission_type_id', 'medical_specialty', 'diag_1', 'race']:
             # create a OneHotEncoder object and fit it to the indexed column
             encoder = OneHotEncoder(inputCol=col+"_index", outputCol=col+"_vec")
             encoders.append(encoder)
-            
             # add the encoded column to the list of columns
             cols.append(col+"_vec")
         else:
             cols.append(col+"_index")
-else:
+    else:
     # add the original column to the list of columns
     cols.append(col)
 
