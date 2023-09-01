@@ -1,0 +1,122 @@
+name: MLOps Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - dev
+  release:
+    types:
+      - created
+
+jobs:
+  lint-code:
+    name: Lint code
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+      - name: Install Flake8
+        run: pip install flake8
+      - name: Run Flake8
+        run: |
+          flake8 src --show-source --statistics \
+            --ignore W503,E226,D100,D202,D205,D104,D400,D401,E501,E402,W291 \
+            --builtins=dbutils,spark,display
+
+  check-training-pipeline:
+    name: Check for training pipeline file
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Check for training pipeline file
+        run: |
+          if [ ! -e "$GITHUB_WORKSPACE/src/model/train.py" ]; then
+            echo "ERROR - \"src/model/train.py\" does not exist. Please create a python script for the training pipeline."
+            exit 1
+          else
+            echo "SUCCESS - \"src/model/train.py\" exists!"
+          fi
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+      - name: Install dbx
+        run: pip install dbx
+      - name: Configure dbx
+        run: dbx configure
+      - name: Deploy and launch tests
+        run: |
+          dbx deploy ${{ github.repository }}-tests --assets-only
+          dbx launch --from-assets --trace --include-output stdout ${{ github.repository }}-tests
+
+  train-and-register:
+    name: Train and Register
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+      - name: Install dbx
+        run: pip install dbx
+      - name: Configure dbx
+        run: dbx configure
+      - name: Deploy and launch training
+        run: |
+          dbx deploy ${{ github.repository }}-training --assets-only
+          dbx launch --from-assets --trace --include-output stdout ${{ github.repository }}-training
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+      - name: Install dbx
+        run: pip install dbx
+      - name: Configure dbx
+        run: dbx configure
+      - name: Deploy and launch integration tests
+        run: |
+          dbx deploy ${{ github.repository }}-integration-tests --assets-only
+          dbx launch --from-assets --trace --include-output stdout ${{ github.repository }}-integration-tests
+
+  deployment-to-production:
+    name: Deployment to Production
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+      - name: Install dbx
+        run: pip install dbx
+      - name: Configure dbx
+        run: dbx configure
+      - name: Deploy and launch training
+        run: |
+          dbx deploy ${{ github.repository }}-training --assets-only
+          dbx launch --from-assets --trace --include-output stdout ${{ github.repository }}-training
