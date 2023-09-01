@@ -14,14 +14,17 @@ on:
 jobs:
   lint-code:
     name: Lint code
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
-          python-version: 3.10
+          python-version: ${{ matrix.python-version }}
       - name: Install Flake8
         run: pip install flake8
       - name: Run Flake8
@@ -32,7 +35,10 @@ jobs:
 
   check-training-pipeline:
     name: Check for training pipeline file
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -47,14 +53,17 @@ jobs:
 
   unit-tests:
     name: Unit Tests
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
-          python-version: 3.10
+          python-version: ${{ matrix.python-version }}
       - name: Install dbx
         run: pip install dbx
       - name: Configure dbx
@@ -66,14 +75,17 @@ jobs:
 
   train-and-register:
     name: Train and Register
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
-          python-version: 3.10
+          python-version: ${{ matrix.python-version }}
       - name: Install dbx
         run: pip install dbx
       - name: Configure dbx
@@ -85,14 +97,17 @@ jobs:
 
   integration-tests:
     name: Integration Tests
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
-          python-version: 3.10
+          python-version: ${{ matrix.python-version }}
       - name: Install dbx
         run: pip install dbx
       - name: Configure dbx
@@ -104,14 +119,17 @@ jobs:
 
   deployment-to-production:
     name: Deployment to Production
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
-          python-version: 3.10
+          python-version: ${{ matrix.python-version }}
       - name: Install dbx
         run: pip install dbx
       - name: Configure dbx
