@@ -1,11 +1,11 @@
 # Databricks notebook source
 import mlflow
-from mlflow.models import ModelSignature, infer_signature
+from mlflow.models import ModelSignature
 from mlflow.types.schema import Schema, ColSpec
 mlflow.set_registry_uri("databricks-uc")
 
 from pyspark.ml import Pipeline
-from pyspark.ml.feature import StringIndexer, OneHotEncoder, Imputer
+from pyspark.ml.feature import StringIndexer, OneHotEncoder
 from pyspark.ml.feature import VectorAssembler
 from xgboost.spark import SparkXGBClassifier
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
@@ -88,7 +88,7 @@ for col in df.columns:
         # create a StringIndexer object and fit it to the column
         indexer = StringIndexer(inputCol=col, outputCol=col+"_index")
         indexers.append(indexer)
-        if col in ['discharge_disposition_id', 'admission_source_id', 'weight', 'payer_code','age', 'admission_type_id', 'medical_specialty', 'diag_1', 'race']:
+        if col in ['discharge_disposition_id', 'admission_source_id', 'weight', 'payer_code', 'age', 'admission_type_id', 'medical_specialty', 'diag_1', 'race']:
             # create a OneHotEncoder object and fit it to the indexed column
             encoder = OneHotEncoder(inputCol=col+"_index", outputCol=col+"_vec")
             encoders.append(encoder)
