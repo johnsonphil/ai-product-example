@@ -2,7 +2,7 @@
 show-source = true
 
 # Never enforce the following violations
-ignore = ["D100", "D104", "D202", "D205", "D400", "D401", "E226", "E402", "E501", "W291", "W503"]
+ignore = ["D100", "D104", "D202", "D205", "D400", "D401", "E226", "E402", "E501", "W291"]
 
 # These modules are built-in to Databricks PySpark
 builtins = ["dbutils", "spark", "display"]
