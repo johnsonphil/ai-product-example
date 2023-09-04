@@ -64,6 +64,9 @@ jobs:
       - name: Install dbx
         run: pip install dbx
       - name: Configure dbx
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: dbx configure
       - name: Deploy and launch tests
         run: |
