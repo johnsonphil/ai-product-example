@@ -14,9 +14,8 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        pip install ruff
     - name: Analysing the code with ruff
-      run: |
-        ruff src --ignore W503,E226,D100,D202,D205,D104,D400,D401,E501,E402,W291 --builtins=["dbutils","spark","display"]
+      uses: chartboost/ruff-action@v1
+      with:
+        src: "./src"
+        args: --ignore ["W503", "E226", "D100", "D202", "D205", "D104", "D400", "D401", "E501", "E402", "W291"] --builtins=["dbutils", "spark", "display"]
