@@ -18,4 +18,4 @@ jobs:
       uses: chartboost/ruff-action@v1
       with:
         src: "./src"
-        args: --ignore ["E226", "D100", "D202", "D205", "D104", "D400", "D401", "E501", "E402", "W291"] --builtins=["dbutils", "spark", "display"]
+        args: --ignore ["D100", "D202", "D205", "D104", "D400", "D401", "E501", "E402", "W291"] --builtins=["dbutils", "spark", "display"]
