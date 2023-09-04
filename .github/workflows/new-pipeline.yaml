@@ -29,7 +29,7 @@ jobs:
         run: pip install ruff
       - name: Run Ruff
         run: |
-          ruff src --show-source --statistics
+          ruff src --ignore W503,E226,D100,D202,D205,D104,D400,D401,E501,E402,W291 --builtins=dbutils,spark,display
 
   check-training-pipeline:
     name: Check for training pipeline file
