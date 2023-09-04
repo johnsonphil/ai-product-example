@@ -64,11 +64,11 @@ jobs:
       - name: Install dbx
         run: pip install dbx
       - name: Configure dbx
+        run: dbx configure
+      - name: Deploy and launch tests
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: dbx configure
-      - name: Deploy and launch tests
         run: |
           dbx deploy ${{ github.repository }}-tests --assets-only
           dbx launch --from-assets --trace --include-output stdout ${{ github.repository }}-tests
