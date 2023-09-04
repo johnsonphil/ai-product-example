@@ -19,4 +19,4 @@ jobs:
         pip install ruff
     - name: Analysing the code with ruff
       run: |
-        ruff src --show-source --statistics
+        ruff src
