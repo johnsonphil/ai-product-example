@@ -1,4 +1,4 @@
-name: Flake8
+name: Linter
 
 on: [push]
 
@@ -16,7 +16,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        pip install flake8
-    - name: Analysing the code with flake8
+        pip install ruff
+    - name: Analysing the code with ruff
       run: |
-        flake8 src --show-source --statistics --ignore W503,E226,D100,D202,D205,D104,D400,D401,E501,E402,W291 --builtins=dbutils,spark,display
+        ruff src --show-source --statistics
