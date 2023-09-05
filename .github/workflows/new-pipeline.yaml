@@ -67,7 +67,7 @@ jobs:
         run: dbx configure
       - name: Deploy and launch tests
         env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_HOST: https://adb-1269116303650663.3.azuredatabricks.net/
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           dbx deploy ${{ github.repository }}-tests --assets-only
