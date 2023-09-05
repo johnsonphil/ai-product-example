@@ -67,7 +67,7 @@ jobs:
         run: dbx configure
       - name: Deploy and launch tests
         env:
-          DATABRICKS_HOST: https://adb-1269116303650663.3.azuredatabricks.net/
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           dbx deploy ${{ github.repository }}-tests --assets-only
@@ -92,7 +92,7 @@ jobs:
         run: dbx configure
       - name: Deploy and launch training
         env:
-          DATABRICKS_HOST: https://adb-1269116303650663.3.azuredatabricks.net/
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           dbx deploy ${{ github.repository }}-training --assets-only
@@ -117,7 +117,7 @@ jobs:
         run: dbx configure
       - name: Deploy and launch integration tests
         env:
-          DATABRICKS_HOST: https://adb-1269116303650663.3.azuredatabricks.net/
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           dbx deploy ${{ github.repository }}-integration-tests --assets-only
@@ -142,7 +142,7 @@ jobs:
         run: dbx configure
       - name: Deploy and launch training
         env:
-          DATABRICKS_HOST: https://adb-1269116303650663.3.azuredatabricks.net/
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           dbx deploy ${{ github.repository }}-training --assets-only
