@@ -67,7 +67,6 @@ jobs:
         run: dbx configure
       - name: Deploy and launch tests
         env:
-          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           dbx deploy ${{ github.repository }}-tests --assets-only
